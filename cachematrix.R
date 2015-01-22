@@ -7,10 +7,11 @@ makeCacheMatrix <- function(x = matrix()) {
     ## created yet
     m <- NULL
     
-    ## invertMatrix inverts a matrix
-    invertMatrix <- function(y) {
-        x <<- solve(y)
-    }
+    ## invertMatrix inverts a matrix (note: this changes  value of m
+    ## from NULL to the matrix, making the if-statement in cacheSolve
+    ## true)
+    invertMatrix <- function(y) m <<- solve(y)
+
     ## getMatrix returns the matrix
     getMatrix <- function() x ## returns the matrix when called
 }
@@ -19,7 +20,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## cacheSolve checks if an inverted matrix already exists. If so, it returns
 ## that cached matrix. If not, it creates it (all using makeCacheMatrix)
 
-cacheSolve <- function(x, ...) { ## x is the function name
+cacheSolve <- function(x, ...) { ## x stands for function makeCacheMatrix
     ## read output from function getMatrix from within makeCacheMatrix
     m <- x$getMatrix()
     
