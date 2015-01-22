@@ -1,28 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
-
 ## makeCacheMatrix creates a matrix object that can be called by other
 ## functions using x$invertMatrix (which inverts the matrix) or
 ## x$getMatrix (which returns the matrix).
 
 makeCacheMatrix <- function(x = matrix()) {
+    ## m needs to be able to return if no inverted matrix has been
+    ## created yet
     m <- NULL
+    
+    ## invertMatrix inverts a matrix
     invertMatrix <- function(y) {
-        x <<- solve(y) ## global variable contains the inverted matrix
+        x <<- solve(y)
     }
+    ## getMatrix returns the matrix
     getMatrix <- function() x ## returns the matrix when called
 }
 
 
-## Write a short comment describing this function
+## cacheSolve checks if an inverted matrix already exists. If so, it returns
+## that cached matrix. If not, it creates it (all using makeCacheMatrix)
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(x, ...) { ## x is the function name
+    ## read output from function getMatrix from within makeCacheMatrix
     m <- x$getMatrix()
+    
+    ## if the inverted matrix exists, return it and exit
     if(!is.null(m)) {
         message("getting cached data")
         return(m)
     }
+    ## if the inverted matrix does not exist (i.e. m is NULL),
+    ## call function invertMatrix from within makeCacheMatrix
+    ## and return its output
     x$invertMatrix(m)
     m
 }
