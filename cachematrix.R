@@ -4,9 +4,18 @@
 
 makeCacheMatrix <- function(x = matrix()) {
     
+    ## m contains the inverted matrix
     ## m returns NULL when getMatrix is called if no inverted matrix 
     ## has been created yet
     m <- NULL
+    
+    ## setMatrix assigns a matrix to x
+    ## This is necessary because when the matrix (x) changes,
+    ## its inverse (m) has to be recalculated.
+    setMatrix <- function(y) {
+        x <<- y
+        m <<- NULL
+    }
     
     ## invertMatrix saves the inverted matrix into variable m 
     ## (note: this makes the if-statement in cacheSolve true)
